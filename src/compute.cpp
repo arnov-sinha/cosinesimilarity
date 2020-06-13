@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include "cosinehelper.h"
 
+using namespace std ;
+
 int main( int argc, char **argv )
   {
   std::string input ;

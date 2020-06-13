@@ -26,10 +26,10 @@ $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 $(ODIR)/%.o: $(SDIR)/%.cpp $(DEPS)
 	$(CXX) $(CXXOPTIONS) -c -o $@ $< $(CXXFLAGS)
 
-runcosine: $(OBJ)
+cosine: $(OBJ)
 	$(CXX) $(CXXOPTIONS) -o $@ $^ $(CXXFLAGS) $(LIBS)
 
 .PHONY: clean
 
 clean:
-	rm -f gmon.out $(ODIR)/*.o runcosine *~ core $(INCDIR)/*~
+	rm -f gmon.out $(ODIR)/*.o cosine *~ core $(INCDIR)/*~

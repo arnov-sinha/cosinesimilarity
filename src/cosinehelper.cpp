@@ -1,5 +1,5 @@
 #include <string.h>
-#include <math.h>
+#include <cmath>
 #include "cosinehelper.h"
 
 using namespace std ;
