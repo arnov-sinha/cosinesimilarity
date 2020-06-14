@@ -147,7 +147,6 @@ private:
 	std::vector<uint32_t> selectrows() ;
 	std::string getcorpusmatrixform( uint32_t rowinfoindex ) ;
 	std::string ( *cleaningtool ) ( const std::string &dirtystring ) ;
-	std::string defaultcleaningtool( const std::string &dirtystring ) ;
 	
 	inline uint32_t mapbigramtodim( uint32_t index ) const
 	  {
@@ -204,6 +203,8 @@ public:
 } ;
 
 std::string stdcleaningtool( const std::string &dirtystring ) ;
+std::string defaultcleaningtool( const std::string &dirtystring ) ;
+
 static inline double compute_elapsed( const struct timespec &starttime)
   {
   struct timespec endtime;

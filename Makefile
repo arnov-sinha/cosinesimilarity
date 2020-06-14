@@ -10,7 +10,13 @@ CXXFLAGS=-I$(IDIR)
 COPT= -O2
 CXXOPT= -O2
 COPTIONS= $(COPT) -g -Wall
-CXXOPTIONS= $(CXXOPT) -g -std=c++14 -fopenmp -Wall #-D_DEBUGCORPUS -D_PRINTS
+TEST=n
+
+ifeq ($(TEST), y)
+	CXXOPTIONS= $(CXXOPT) -g -std=c++14 -fopenmp -Wall -D_TEST
+else
+	CXXOPTIONS= $(CXXOPT) -g -std=c++14 -fopenmp -Wall #-D_DEBUGCORPUS -D_PRINTS
+endif
 
 LIBS=
 
@@ -28,6 +34,9 @@ $(ODIR)/%.o: $(SDIR)/%.cpp $(DEPS)
 
 cosine: $(OBJ)
 	$(CXX) $(CXXOPTIONS) -o $@ $^ $(CXXFLAGS) $(LIBS)
+
+test:
+	make -f Makefile TEST=y
 
 .PHONY: clean
 

@@ -7,7 +7,7 @@ using namespace std ;
 CosineHelper::CosineHelper( const char* file, 
                             string ( *cleaner ) ( const string& dirtystring ) ) : filename( file ),
                                                                                   totalnnzs( 0 ),
-                                                                                  anchorwords( 15000 ),
+                                                                                  anchorwords( 15000 ),     // Quad count threshold
                                                                                   cleaningtool( *cleaner )
   {
   loadcorpus( filename ) ;
@@ -58,11 +58,6 @@ void CosineHelper::closeblockreadfile( FILE *f )
   {
   if( f != NULL )
     pclose( f ) ;
-  }
-
-string CosineHelper::defaultcleaningtool( const string &dirtystring )
-  {
-  return dirtystring ;
   }
 
 void CosineHelper::loadcorpus( const std::vector<std::string> &inputcorpus )
@@ -1118,9 +1113,14 @@ vector<vector<Result_t> > CosineHelper::cosinematching( const string &input,
   std::vector<std::vector<Result_t> > result ;
   result.resize( 1 ) ;
 
+#ifdef _TEST
+  threshold = 0.4 ;
+  maxresults = 5 ;
+#else
   bool flag = true ;
   while( flag )
     {
+
     try
       {
       string thresh ;
@@ -1142,10 +1142,10 @@ vector<vector<Result_t> > CosineHelper::cosinematching( const string &input,
       flag = true ;
       }
     }
-  // test code ends
 
   if( threshold < 0 )
     threshold = 0 ;
+#endif
 
   vector<uint32_t> selectedrows ;
   vector<uint32_t> sparserow ;
@@ -1348,6 +1348,15 @@ vector<Result_t> CosineHelper::score( const string inputtext, const vector<uint3
 
   cout<<"Number of row multiplication -> "<<counter<<endl ;
   return result ;
+  }
+
+string defaultcleaningtool( const string &dirtystring )
+  {
+  string cleanstring ; 
+  uint64_t dirtystringsize = dirtystring.size() ;
+  for( uint32_t i = 0 ; i < dirtystringsize ; ++i )
+    cleanstring += toupper( dirtystring[ i ] ) ;
+  return cleanstring ;
   }
 
 string stdcleaningtool( const std::string &dirtystring )

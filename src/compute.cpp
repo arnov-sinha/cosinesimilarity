@@ -34,7 +34,7 @@ int main( int argc, char **argv )
                                             // "jonathans"
                                          } ;
   clock_gettime( CLOCK_REALTIME, &timetoload ) ;
-  cos = new CosineHelper( debugcorpus, stdcleaningtool ) ;
+  cos = new CosineHelper( debugcorpus, defaultcleaningtool ) ;
 #else
   if( argc == 1 )
     {
@@ -50,7 +50,7 @@ int main( int argc, char **argv )
     if( argc > 2 )
       {
       clock_gettime( CLOCK_REALTIME, &timetoload ) ;
-      cos = new CosineHelper( argv[ 2 ], stdcleaningtool ) ;
+      cos = new CosineHelper( argv[ 2 ], defaultcleaningtool ) ;
       }
     else
       {
@@ -76,7 +76,7 @@ int main( int argc, char **argv )
       	inputcorpus.push_back( input ) ;
       	}
       clock_gettime( CLOCK_REALTIME, &timetoload ) ;
-      cos = new CosineHelper( inputcorpus, stdcleaningtool ) ;
+      cos = new CosineHelper( inputcorpus, defaultcleaningtool ) ;
       }
     else
       {
@@ -96,7 +96,17 @@ int main( int argc, char **argv )
 #endif
 
   cos->stats() ;
-  
+
+#ifdef _TEST
+  input.clear() ;
+  input = "Andew" ; 
+  result = cos->cosinematching( input ) ;
+  std::cout<<"\nCosine results ->"<<std::endl ;
+  for( uint64_t i = 0 ; i < result[ 0 ].size() ; ++i )
+    std::cout<<"[ "<<i+1<<" ] "<<result[ 0 ][ i ].part<<"\t "<<result[ 0 ][ i ].score<<"\t\t\t"<<std::endl ;
+  return 0 ;
+
+#endif  
   input.clear() ;
   while( true )
     {
